@@ -1,0 +1,58 @@
+#delimit;
+
+class disparitySource
+
+	{;
+
+	string mnemonic;
+	string ctot;
+	string location;
+
+	*dsn;
+
+	};
+
+program .new;
+
+	syntax, mnemonic(string) location(string) ctot(string);
+
+	.mnemonic   = "`mnemonic'";
+	.ctot 	    = "`ctot'";
+	.location   = "`location'";
+
+end;
+
+program .import;
+
+	insheet using "`.location'", clear names;
+		assert `c(N)' == `.ctot';
+
+end;
+
+program .addBBCORIG;
+
+	syntax, inmem;
+
+	tempvar index;
+	gen `index' = _n;
+
+	local lzs = length("`.ctot'");
+	format %0`lzs'.0f `index';
+	tostring `index', replace usedisplayformat;
+
+	gen bbc_orig = "`.mnemonic'_"+`index';
+	order bbc_orig;
+
+end;
+
+program .inaugurate;
+
+	syntax, dsn(string);
+
+	tempname ccon;
+	.`ccon'       = .dbTable.new, dsn(`dsn') name(`.mnemonic');
+	.`ccon'.safeWrite;
+
+end;
+
+exit;

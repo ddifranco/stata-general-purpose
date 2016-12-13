@@ -1,0 +1,38 @@
+#delimit;
+
+class dbTable 
+
+	{;
+
+	string dsn;
+	string name;
+
+	};
+
+program .new;
+
+	syntax, dsn(string) name(string);
+
+	.dsn  = `"`dsn'"';
+	.name = `"`name'"';
+
+end;
+
+program .open;
+
+	syntax, clear;
+
+	clear;
+	odbc query "`.dsn'";
+	odbc load, table("`.name'");
+
+end;
+
+program .safeWrite;
+
+	getStamp;
+	odbc insert, table("[`.name'_`r(stamp)']") dsn("`.dsn'") create;
+
+end;
+
+exit;
