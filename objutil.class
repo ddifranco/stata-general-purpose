@@ -1,0 +1,20 @@
+#delimit;
+
+class objutil {; };
+
+program  .getHandles;
+
+	syntax, [ofType(string)];
+
+	quietly classutil dir;
+	local heap =  subinstr("`r(list)'", ".", "", .); 
+
+	if ~`.m.p `ofType'' {; class exit "`heap'"; };
+
+	foreach obj of local heap {; if `.`obj'.isofclass `ofType'' {; local results `results' `obj'; }; };
+
+	class exit "`results'";
+
+end;
+
+exit;

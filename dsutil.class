@@ -1,0 +1,52 @@
+#delimit;
+
+class dsutil {; };
+
+program .count;
+
+	syntax [if];
+
+	count `if';
+
+	class exit `r(N)';
+
+end;
+
+program .vars;
+
+	syntax, [exclude(varlist)];
+
+	unab rvars: *;
+
+	if `.m.p `exclude''
+
+		{;
+
+		local rvars: list rvars - exclude;
+
+		};
+
+	class exit "`rvars'";
+
+end;
+
+program .exists;
+
+	syntax, variable(string);
+
+	unab all: *;
+
+	class exit "`: list variable in all'";
+
+
+end;
+
+program .sum;
+
+	quietly sum `0', detail;
+
+	class exit "`r(sum)'";
+
+end;
+
+exit;

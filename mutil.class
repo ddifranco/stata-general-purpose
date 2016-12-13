@@ -1,0 +1,48 @@
+#delimit;
+
+class mutil 
+
+	{; 
+
+	double counter = 0;
+
+	};
+
+program .p;
+
+
+	if `"`0'"' ~= `""' {; class exit 1; };
+
+	class exit 0;
+
+end;
+
+program .size;
+
+	class exit  `: list sizeof 0';
+
+end;
+
+program .cbrandom;
+
+	.counter = `.counter' + 1;
+
+	local dcomp = subinstr("`c(current_date)'", " ", "_", .);
+	local tcomp = subinstr("`c(current_time)'", ":", "",  .);
+	local rcomp = floor(runiform()*10e3);
+
+	class exit "`dcomp'_`tcomp'_`rcomp'_`.counter'";
+end;
+
+exit;
+
+program .cbrandom;
+
+	local dcomp = subinstr "`c(current_date)'", " ", "_", .;
+	local tcomp = subinstr "`c(current_time)'", ":", "", .;
+	local rcomp = floor(runiform()*10e3);
+
+	*class exit `dcomp'_`tcomp'_`rcomp';
+	class exit dfgdf;
+end;
+
